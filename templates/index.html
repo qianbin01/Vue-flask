@@ -2,9 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <!--导入element-ui样式表-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/element_index.css') }}">
+    <title>vue.js+flask+element-ui简易Demo</title>
 </head>
 <body>
-$END$
+<div id="vue-app">
+    <tabel-detail></tabel-detail>
+</div>
 </body>
+<!--引入相应的包-->
+<!--让js文件可以使用Flask.url_for-->
+{{ JSGlue.include() }}
+<!--Vue.js-->
+<script src="{{ url_for('static', filename='js/vue.js') }}"></script>
+<!--element-ui-->
+<script src="{{ url_for('static', filename='js/element-index.js') }}"></script>
+<!--datatable.js-->
+<script src="{{ url_for('static', filename='js/data-tables.js') }}"></script>
+<!--axios.js-->
+<script src="{{ url_for('static', filename='js/axios.min.js') }}"></script>
+
+<!--templates-->
+<script type="text/x-template" id="tabel-detail-template">
+    <div>
+        <data-tables :data='tableData' :actions-def="getActionsDef()"
+                     :pagination-def="getPaginationDef()"
+                     :row-action-def="getRowActionsDef()"
+                     action-col-width="80">
+            <el-table-column label="关键词" min-width="400">
+                <template scope="scope">
+                    <a :href="scope.row.url" v-text="scope.row.name"></a>
+                </template>
+            </el-table-column>
+        </data-tables>
+        <el-dialog :title="formTitle" :visible.sync="dialogFormVisible">
+            <el-form :model="form" @submit.native.prevent>
+                <el-form-item label="数据">
+                    <el-input ref="valueInput" v-model.trim="form.name" auto-complete="off"
+                              @keyup.enter.native="createOrUpdate"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="createOrUpdate">确 定</el-button>
+            </div>
+        </el-dialog>
+    </div>
+</script>
+
+<!--项目js-->
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </html>
