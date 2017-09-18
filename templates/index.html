@@ -32,7 +32,7 @@
                      action-col-width="80">
             <el-table-column label="关键词" min-width="400">
                 <template scope="scope">
-                    <a :href="scope.row.url" v-text="scope.row.name"></a>
+                    <a :href="scope.row.url" target="_blank" v-text="scope.row.name"></a>
                 </template>
             </el-table-column>
         </data-tables>
